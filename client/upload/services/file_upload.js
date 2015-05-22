@@ -18,7 +18,7 @@ angular.module('ngflowupload').factory('FileUpload', [ '$meteor', '$meteorCollec
 
         Images.insert(data.file, function (err, fileObj) {
             if (err) {
-          		$log.error('Error', err);
+          	  $log.error('Error', err);
               d.reject(err);
             } else {
               d.resolve();

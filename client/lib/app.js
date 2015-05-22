@@ -26,11 +26,6 @@ var configFn = ['$mdIconProvider', '$mdThemingProvider', 'flowFactoryProvider',
     .accentPalette('orange')
     .warnPalette('red');
 
-  /*flowFactoryProvider.defaults = {
-		target: meteorUpload,
-		testChunks: false,
-		permanentErrors:[404, 500, 501]
-	};*/
 	flowFactoryProvider.on('catchAll', function (event) {
 		console.log('catchAll ', arguments, event);
 	  });
@@ -44,7 +39,6 @@ function onReady() {
   angular.bootstrap(document, ['ngflowupload'], {
 	  strictDi: true
 	});
-	//angular.bootstrap(document, ['ngflowupload']);
 }
 
 if (Meteor.isCordova)

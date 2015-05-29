@@ -8,13 +8,9 @@ meteor-platform
 insecure
 urigo:angular
 angular:angular-material
-accounts-password
-accounts-ui
-msavin:mongol
 cfs:standard-packages
 cfs:gridfs
 cfs:graphicsmagick
 cfs:ui
 planettraining:material-design-icons
 mdg:camera
-digimet:ng-flow

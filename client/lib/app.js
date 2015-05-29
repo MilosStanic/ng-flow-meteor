@@ -3,45 +3,40 @@
 /// <reference path="../../typings/meteor/all-definitions.d.ts" />
 
 angular.module('ngflowupload',[
-  'angular-meteor',
-  'ngMaterial',
-  'flow'
+	'angular-meteor',
+	'ngMaterial'
 ]);
 
-var configFn = ['$mdIconProvider', '$mdThemingProvider', 'flowFactoryProvider',
-	function ($mdIconProvider, $mdThemingProvider, flowFactoryProvider) {
+var configFn = ['$mdIconProvider', '$mdThemingProvider',
+	function ($mdIconProvider, $mdThemingProvider) {
 
-  $mdIconProvider
-    .iconSet("social", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-social.svg")
-    .iconSet("action", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-action.svg", 24)
-    .iconSet("communication", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-communication.svg")
-    .iconSet("content", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-content.svg", 24)
-    .iconSet("toggle", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-toggle.svg")
-    .iconSet("navigation", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-navigation.svg")
-    .iconSet("image", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-image.svg")
-    .iconSet('editor', '/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-editor.svg');
+	$mdIconProvider
+		.iconSet("social", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-social.svg")
+		.iconSet("action", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-action.svg", 24)
+		.iconSet("communication", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-communication.svg")
+		.iconSet("content", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-content.svg", 24)
+		.iconSet("toggle", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-toggle.svg")
+		.iconSet("navigation", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-navigation.svg")
+		.iconSet("image", "/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-image.svg")
+		.iconSet('editor', '/packages/planettraining_material-design-icons/bower_components/material-design-icons/sprites/svg-sprite/svg-sprite-editor.svg');
 
-  $mdThemingProvider.theme('default')
-    .primaryPalette('light-blue')
-    .accentPalette('orange')
-    .warnPalette('red');
-
-	flowFactoryProvider.on('catchAll', function (event) {
-		console.log('catchAll ', arguments, event);
-	  });
+	$mdThemingProvider.theme('default')
+		.primaryPalette('light-blue')
+		.accentPalette('orange')
+		.warnPalette('red');
 
 }];
 
 angular.module('ngflowupload')
-  .config(configFn);
+	.config(configFn);
 
 function onReady() {
-  angular.bootstrap(document, ['ngflowupload'], {
-	  strictDi: true
+	angular.bootstrap(document, ['ngflowupload'], {
+		strictDi: true
 	});
 }
 
 if (Meteor.isCordova)
-  angular.element(document).on('deviceready', onReady);
+	angular.element(document).on('deviceready', onReady);
 else
-  angular.element(document).ready(onReady);
+	angular.element(document).ready(onReady);

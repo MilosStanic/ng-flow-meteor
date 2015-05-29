@@ -1,23 +1,14 @@
 <md-content flow-init layout-padding>
-	<div layout="column" ng-controller="UploadCtrl as uc"
-			flow-files-submitted="$flow.upload()"
-			flow-file-success="$file.msg = $message"
-			flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1,pdf:1,doc:1,docx:1,xls:1,xlsx:1}[$file.getExtension()]">
+	<div layout="column" ng-controller="UploadCtrl as uc">
 			<h2>Upload files</h2>
 			<div class="md-actions">
-				<md-button flow-btn aria-label="upload" class="md-primary md-raised">
+				<md-button ng-click="uc.upload()" aria-label="upload" class="md-primary md-raised">
 					Upload
 					<md-icon md-svg-icon="editor:ic_attach_file_24px"></md-icon>
 				</md-button>
 			</div>
-			<div ng-show="$flow.isUploading()" layout="column">
-				<span>Uploading:</span>
-				<div ng-repeat="file in $flow.files">{{file.name}} -- {{ file.size }}</div>
-				<md-progress-linear md-mode="determinate"
-						ng-value="($flow.progress() * 100)"
-						ng-show="$flow.isUploading()">
-				</md-progress-linear>
-			</div>
+			<md-progress-linear md-mode="determinate"	ng-value="uc.progress()" ng-show="!uc.isUploaded()">
+			</md-progress-linear>
 			<h3>Uploaded files:</h3>
 			<div layout="row" layout-wrap layout-padding>
 				<div ng-repeat="img in uc.images track by img._id" layout="row">

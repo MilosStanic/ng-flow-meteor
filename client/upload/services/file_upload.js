@@ -1,32 +1,64 @@
-angular.module('ngflowupload').factory('FileUpload', [ '$meteor', '$meteorCollection', '$log', '$q',
-	function($meteor, $meteorCollection, $log, $q){
-		return {
-        images:    $meteor.collection(Images, false),
-        url:       url,
-        uploadImg: uploadImg
-    };
+var FileUpload = function($meteor, $meteorCollection, $log, $q){
 
-    function url(image, store) {
-        if (!image || !image.url) return null;
+		function FileUploadKlass(){
+			var self = this;
+			self.images = $meteor.collection(Images, false);
+			self.currentFile = null;
+		}
 
-        return image.copies && image.copies[store] ? image.url({store: store}) + '&updatedAt=' + image.copies[store].updatedAt.getTime() : '';
-    }
+		FileUploadKlass.prototype.url = function(image, store){
+		if (!image || !image.url) return null;
+		return image.copies && image.copies[store] ? image.url({store: store}) + '&updatedAt=' + image.copies[store].updatedAt.getTime() : '';
+	};
 
-    function uploadImg(data) {
+	FileUploadKlass.prototype.uploadImg = function() {
+			var d = $q.defer();
+			self.currentFile = null;
+		$('<input type="file">').bind("change", function (event) {
+			// There is a bug in angular-meteor that causes this code not to
+			// work. Once it is solves should be possible with:
+			//$scope.images.save(event.target.files[0]);
 
-        var d = $q.defer();
+			// this is temporary
 
-        Images.insert(data.file, function (err, fileObj) {
-            if (err) {
-          	  $log.error('Error', err);
-              d.reject(err);
-            } else {
-              d.resolve();
-            }
-        });
+			Images.insert(event.target.files[0], function(error, result) {
+				if (error) {
+					console.log('error', error);
+					d.reject(err);
+				}
+				else {
+					// setting factory currentFile to last uploaded file, i.e. file currently uploading
+					// this is very important
+					self.currentFile = result;
+					d.resolve(result);
+				}
+			});
 
-        return d.promise;
-    }
+		}).click();
 
+		return d.promise;
+	};
+
+	FileUploadKlass.prototype.getProgress = function() {
+		if (angular.isDefined(self.currentFile))
+			if (self.currentFile !== null)
+				return self.currentFile.uploadProgress();
+	  return null;
+	};
+
+	FileUploadKlass.prototype.isUploaded = function(){
+		if (angular.isDefined(self.currentFile))
+			if (self.currentFile !== null)
+				return self.currentFile.isUploaded();
+		return true;
 	}
-]);
+
+	var FileUploadFactory = new FileUploadKlass();
+
+	return FileUploadFactory;
+};
+
+FileUpload.$inject = ['$meteor', '$meteorCollection', '$log', '$q'];
+
+angular.module('ngflowupload').factory('FileUpload', FileUpload);
+
